@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">aids03</string>
+
+    <string name="error_input_department">Invalid department</string>
+    <string name="error_input_doctor">Invalid doctor</string>
+    <string name="error_input_dateRegister">Invalid date register</string>
+    <string name="error_input_timeRegister">Invalid time register</string>
+
+</resources>
