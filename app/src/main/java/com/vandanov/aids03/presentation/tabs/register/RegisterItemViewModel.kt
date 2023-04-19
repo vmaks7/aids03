@@ -1,4 +1,4 @@
-package com.vandanov.aids03.presentation.register
+package com.vandanov.aids03.presentation.tabs.register
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -35,7 +35,7 @@ class RegisterItemViewModel : ViewModel() {
     val registerItem: LiveData<RegisterItem>
         get() = _registerItem
 
-    //лайф-дата для закрытия экрана
+//    лайф-дата для закрытия экрана
     private val _shouldCloseScreen = MutableLiveData<Unit>()
     val shouldCloseScreen: LiveData<Unit>
         get() = _shouldCloseScreen
@@ -65,7 +65,7 @@ class RegisterItemViewModel : ViewModel() {
             val registerItem =
                 RegisterItem(dateRegister, timeRegister, department, doctor, note, false)
             addRegisterUseCase.addRegister(registerItem)
-            closeScreen()
+//            closeScreen()
         }
     }
 

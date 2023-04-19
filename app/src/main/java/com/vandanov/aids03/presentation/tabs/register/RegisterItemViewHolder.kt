@@ -1,4 +1,4 @@
-package com.vandanov.aids03.presentation.register
+package com.vandanov.aids03.presentation.tabs.register
 
 import android.view.View
 import android.widget.TextView

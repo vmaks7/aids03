@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/therapy"
+    app:startDestination="@id/therapyFragment">
+
+    <fragment
+        android:id="@+id/therapyFragment"
+        android:name="com.vandanov.aids03.presentation.tabs.therapy.TherapyFragment"
+        android:label="@string/therapy"
+        tools:layout="@layout/fragment_therapy" />
+</navigation>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.vandanov.aids03.presentation.auth.SignInFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_tabsFragment"
+            app:destination="@id/tabsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.vandanov.aids03.presentation.auth.SignUpFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/tabsFragment"
+        android:name="com.vandanov.aids03.presentation.tabs.TabsFragment"
+        android:label="fragment_tabs"
+        tools:layout="@layout/fragment_tabs" >
+        <action
+            android:id="@+id/action_tabsFragment_to_registerItemFragment"
+            app:destination="@id/registerItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerItemFragment"
+        android:name="com.vandanov.aids03.presentation.tabs.register.RegisterItemFragment"
+        android:label="@string/registration"
+        tools:layout="@layout/fragment_register_item" >
+        <argument
+            android:name="mode"
+            app:argType="string" />
+        <argument
+            android:name="registerID"
+            app:argType="integer" />
+    </fragment>
+</navigation>

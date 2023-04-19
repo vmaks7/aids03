@@ -1,4 +1,4 @@
-package com.vandanov.aids03.presentation.register
+package com.vandanov.aids03.presentation.tabs.register
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.ListAdapter
 import com.vandanov.aids03.R
 import com.vandanov.aids03.domain.register.RegisterItem
 
-class RegisterListAdapter: ListAdapter<RegisterItem, RegisterItemViewHolder>(RegisterItemDiffCallback()) {
+class RegisterListAdapter: ListAdapter<RegisterItem, RegisterItemViewHolder>(
+    RegisterItemDiffCallback()
+) {
 
     var onRegisterItemClickListener: ((RegisterItem) -> Unit)? = null
 

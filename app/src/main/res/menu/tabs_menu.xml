@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@id/home"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home" />
+
+    <item android:id="@id/analyzes"
+        android:title="@string/therapy"
+        android:icon="@drawable/ic_search" />
+
+    <item android:id="@id/register"
+        android:title="@string/register"
+        android:icon="@drawable/ic_add"/>
+
+    <item android:id="@id/therapy"
+        android:title="@string/therapy"
+        android:icon="@drawable/ic_person" />
+
+    <item android:id="@id/settings"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_settings" />
+
+</menu>

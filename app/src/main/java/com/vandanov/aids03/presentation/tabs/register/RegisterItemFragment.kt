@@ -1,4 +1,4 @@
-package com.vandanov.aids03.presentation.register
+package com.vandanov.aids03.presentation.tabs.register
 
 import android.content.Context
 import android.os.Bundle
@@ -10,38 +10,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.vandanov.aids03.R
 import com.vandanov.aids03.databinding.FragmentRegisterItemBinding
 import com.vandanov.aids03.domain.register.RegisterItem
 
 class RegisterItemFragment : Fragment() {
 
+    private val args by navArgs<RegisterItemFragmentArgs>()
+    private val registerID by lazy { args.registerID }
+    private val screenMode by lazy { args.mode }
+
     private var _binding: FragmentRegisterItemBinding? = null
     private val binding: FragmentRegisterItemBinding
         get() = _binding ?: throw RuntimeException("FragmentRegisterItemBinding == null")
 
     private lateinit var viewModel: RegisterItemViewModel
-
-    private lateinit var onEditingFinishedListener: OnEditingFinishedListener
-
-    private var screenMode = MODE_UNKNOWN
-    private var registerItemID = RegisterItem.DEFAULT_ID
-
-    // метод когда фрагмент прикрепляется к активити
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnEditingFinishedListener) {
-            onEditingFinishedListener = context
-        } else {
-            throw RuntimeException("Activity must implement OnEditingFinishedListener")
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("RegisterItemFragment", "onCreate")
-        super.onCreate(savedInstanceState)
-        parseParams()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -101,9 +86,7 @@ class RegisterItemFragment : Fragment() {
         }
 
         viewModel.shouldCloseScreen.observe(viewLifecycleOwner) {
-//            activity?.onBackPressed()
-//            activity?.onBackPressedDispatcher?.onBackPressed()
-            onEditingFinishedListener.onEditingFinished()
+            findNavController().popBackStack()
         }
 
     }
@@ -130,7 +113,7 @@ class RegisterItemFragment : Fragment() {
     }
 
     private fun launchEditMode() {
-        viewModel.getRegisterID(registerItemID)
+        viewModel.getRegisterID(registerID)
         viewModel.registerItem.observe(viewLifecycleOwner) {
             binding.apply {
                 etDepartment.setText(it.department)
@@ -202,79 +185,13 @@ class RegisterItemFragment : Fragment() {
         })
     }
 
-    private fun parseParams() {
-        val args = requireArguments()
-        if (!args.containsKey(KEY_SCREEN_MODE)) {
-            throw RuntimeException("Param screen mode is absent")
-        }
-
-        val mode = args.getString(KEY_SCREEN_MODE)
-        if (mode != MODE_EDIT && mode != MODE_ADD) {
-            throw RuntimeException("Unknown screen mode $mode")
-        }
-
-        screenMode = mode
-        if (screenMode == MODE_EDIT) {
-            if (!args.containsKey(KEY_REGISTER_ITEM_ID)) {
-                throw RuntimeException("Param shop item id is absent")
-            }
-            registerItemID = args.getInt(KEY_REGISTER_ITEM_ID, RegisterItem.DEFAULT_ID)
-        }
-    }
-
-    // интерфейс чтобы отправить сообщение из Фрагмента в Активити
-    interface OnEditingFinishedListener {
-
-        fun onEditingFinished()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
     companion object {
-
-        private const val KEY_SCREEN_MODE = "mode"
-        private const val KEY_REGISTER_ITEM_ID = "register_item_id"
         private const val MODE_ADD = "mode_add"
         private const val MODE_EDIT = "mode_edit"
-
-        private const val MODE_UNKNOWN = ""
-
-        fun newInstanceAddItem(): RegisterItemFragment {
-//            val args = Bundle()
-//            args.putString(SCREEN_MODE, MODE_ADD)
-//            val fragment = RegisterItemFragment()
-//            fragment.arguments = args
-//            return fragment
-
-            //код в стиле kotlin
-//            val args = Bundle().apply {
-//                putString(SCREEN_MODE, MODE_ADD)
-//            }
-//            val fragment = RegisterItemFragment().apply {
-//                arguments = args
-//            }
-//            return fragment
-
-            //код в стиле kotlin укороченный
-            return RegisterItemFragment().apply {
-                arguments = Bundle().apply {
-                    putString(KEY_SCREEN_MODE, MODE_ADD)
-                }
-            }
-        }
-
-        fun newInstanceEditItem(registerItemID: Int): RegisterItemFragment {
-            return RegisterItemFragment().apply {
-                arguments = Bundle().apply {
-                    putString(KEY_SCREEN_MODE, MODE_EDIT)
-                    putInt(KEY_REGISTER_ITEM_ID, registerItemID)
-                }
-            }
-        }
-
     }
-
 }

@@ -1,4 +1,4 @@
-package com.vandanov.aids03.presentation.register
+package com.vandanov.aids03.presentation.tabs.register
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
