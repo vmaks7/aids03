@@ -6,12 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.vandanov.aids03.R
 import com.vandanov.aids03.databinding.FragmentRegisterBinding
-import com.vandanov.aids03.domain.register.RegisterItem
+import com.vandanov.aids03.domain.register.entity.RegisterItem
 import com.vandanov.aids03.presentation.tabs.TabsFragmentDirections
 import com.vandanov.aids03.presentation.tabs.utils.findTopNavController
 

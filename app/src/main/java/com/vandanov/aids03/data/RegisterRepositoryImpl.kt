@@ -1,69 +1,98 @@
 package com.vandanov.aids03.data
 
+import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.vandanov.aids03.domain.register.RegisterItem
-import com.vandanov.aids03.domain.register.RegisterRepository
+import androidx.lifecycle.MediatorLiveData
+import com.vandanov.aids03.domain.register.entity.RegisterItem
+import com.vandanov.aids03.domain.register.repository.RegisterRepository
 
-object RegisterRepositoryImpl : RegisterRepository {
+//до ROOM был object
+//object RegisterRepositoryImpl : RegisterRepository {
+class RegisterRepositoryImpl(
+    application: Application
+) : RegisterRepository {
 
-    private val registerListLiveData = MutableLiveData<List<RegisterItem>>()
+    private val registerListDao = AppDatabase.getInstance(application).registerListDao()
+    private val mapper = RegisterListMapper()
 
-    //    private val registerList = mutableListOf<RegisterItem>()
-    // сортировка
-    // 1й вариант
-//    private val registerList = sortedSetOf<RegisterItem>(object : Comparator<RegisterItem> {
-//        override fun compare(o1: RegisterItem?, o2: RegisterItem?): Int {
+        //private val registerListLiveData = MutableLiveData<List<RegisterItem>>()
+
+    //до ROOM
+//    //    private val registerList = mutableListOf<RegisterItem>()
+//    // сортировка
+//    // 1й вариант
+////    private val registerList = sortedSetOf<RegisterItem>(object : Comparator<RegisterItem> {
+////        override fun compare(o1: RegisterItem?, o2: RegisterItem?): Int {
+////
+////        }
+////    })
+//    //2й вариант через лямбда выражение
+//    private val registerList = sortedSetOf<RegisterItem>({ o1, o2 -> o1.id.compareTo(o2.id)})
 //
+//    private var autoIncrementID = 0
+//
+//    init {
+//        for (i in 0 until 10) {
+//            val item = RegisterItem("$i", "", "", "", "")
+//            addRegister(item)
 //        }
-//    })
-    //2й вариант через лямбда выражение
-    private val registerList = sortedSetOf<RegisterItem>({ o1, o2 -> o1.id.compareTo(o2.id)})
+//    }
 
-    private var autoIncrementID = 0
+    override suspend fun addRegister(registerItem: RegisterItem) {
+//        if (registerItem.id == RegisterItem.DEFAULT_ID) {
+//            registerItem.id = autoIncrementID++
+//            // autoIncrementID++
+//        }
+//        registerList.add(registerItem)
+//        updateList()
 
-    init {
-        for (i in 0 until 10) {
-            val item = RegisterItem("$i", "", "", "", "", false)
-            addRegister(item)
-        }
+
+//        registerListDao.addRegisterItem(registerItem)
+        registerListDao.addRegisterItem(mapper.mapEntityToDBModel(registerItem))
     }
 
-    override fun addRegister(registerItem: RegisterItem) {
-        if (registerItem.id == RegisterItem.DEFAULT_ID) {
-            registerItem.id = autoIncrementID++
-            // autoIncrementID++
-        }
-        registerList.add(registerItem)
-        updateList()
+    override suspend fun deleteRegister(registerItem: RegisterItem) {
+//        registerList.remove(registerItem)
+//        updateList()
+
+        registerListDao.deleteRegisterItem(registerItem.id)
     }
 
-    override fun deleteRegister(registerItem: RegisterItem) {
-        registerList.remove(registerItem)
-        updateList()
-    }
+    override suspend fun editRegister(registerItem: RegisterItem) {
+//        val oldElement = getRegisterID(registerItem.id)
+////        registerList.remove(oldElement)
+//        deleteRegister(oldElement)
+//        addRegister(registerItem)
 
-    override fun editRegister(registerItem: RegisterItem) {
-        val oldElement = getRegisterID(registerItem.id)
-//        registerList.remove(oldElement)
-        deleteRegister(oldElement)
-        addRegister(registerItem)
+        // тот же метод, что и для добавления
+        registerListDao.addRegisterItem(mapper.mapEntityToDBModel(registerItem))
     }
 
     override fun getListRegister(): LiveData<List<RegisterItem>> {
-//        //возращаем копию
-//        return registerList.toList()
-        return registerListLiveData
+////        //возращаем копию
+////        return registerList.toList()
+//        return registerListLiveData
+
+        // не подходит
+//        return registerListDao.getRegisterList()
+
+        // MediatorLiveData позволяет перехватывать события из liveData
+        return MediatorLiveData<List<RegisterItem>>().apply {
+            addSource(registerListDao.getRegisterList()) {
+                value = mapper.mapListDBModelToListEntity(it)
+            }
+        }
+
     }
 
-    override fun getRegisterID(register_ID: Int): RegisterItem {
-        return registerList.find {
-            it.id == register_ID
-        } ?: throw java.lang.RuntimeException("Element with id $register_ID not found")
+    override suspend fun getRegisterID(register_ID: Int): RegisterItem {
+//        return registerList.find {
+//            it.id == register_ID
+//        } ?: throw RuntimeException("Element with id $register_ID not found")
+
+        val dbModel = registerListDao.getRegisterListID(register_ID)
+        return mapper.mapDBModelToEntity(dbModel)
     }
 
-    private fun updateList() {
-        registerListLiveData.value = registerList.toList()
-    }
 
 }

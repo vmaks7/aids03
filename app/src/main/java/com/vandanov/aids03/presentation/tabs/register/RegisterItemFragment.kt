@@ -1,10 +1,8 @@
 package com.vandanov.aids03.presentation.tabs.register
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.vandanov.aids03.R
 import com.vandanov.aids03.databinding.FragmentRegisterItemBinding
-import com.vandanov.aids03.domain.register.RegisterItem
 
 class RegisterItemFragment : Fragment() {
 

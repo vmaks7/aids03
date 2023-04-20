@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/purple_500"
         android:clickable="true"
         android:contentDescription="Add new register item"
         android:focusable="true"

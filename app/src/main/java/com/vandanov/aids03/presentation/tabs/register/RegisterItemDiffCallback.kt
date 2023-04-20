@@ -1,7 +1,7 @@
 package com.vandanov.aids03.presentation.tabs.register
 
 import androidx.recyclerview.widget.DiffUtil
-import com.vandanov.aids03.domain.register.RegisterItem
+import com.vandanov.aids03.domain.register.entity.RegisterItem
 
 class RegisterItemDiffCallback: DiffUtil.ItemCallback<RegisterItem>() {
 

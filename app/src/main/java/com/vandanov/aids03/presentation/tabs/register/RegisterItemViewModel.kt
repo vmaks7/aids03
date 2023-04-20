@@ -1,18 +1,27 @@
 package com.vandanov.aids03.presentation.tabs.register
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.vandanov.aids03.data.RegisterRepositoryImpl
-import com.vandanov.aids03.domain.register.*
+import com.vandanov.aids03.domain.register.entity.RegisterItem
+import com.vandanov.aids03.domain.register.usecase.AddRegisterUseCase
+import com.vandanov.aids03.domain.register.usecase.EditRegisterUseCase
+import com.vandanov.aids03.domain.register.usecase.GetRegisterIDUseCase
+import kotlinx.coroutines.launch
 
-class RegisterItemViewModel : ViewModel() {
+class RegisterItemViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = RegisterRepositoryImpl
+    private val repository = RegisterRepositoryImpl(application)
 
     private val getRegisterIDUseCase = GetRegisterIDUseCase(repository)
     private val addRegisterUseCase = AddRegisterUseCase(repository)
     private val editRegisterUseCase = EditRegisterUseCase(repository)
+
+        //вместо него используем viewModelScope
+    //private val scope = CoroutineScope(Dispatchers.IO)
 
     private val _errorInputDepartment = MutableLiveData<Boolean>()
     val errorInputDepartment: LiveData<Boolean>
@@ -42,8 +51,10 @@ class RegisterItemViewModel : ViewModel() {
 
 
     fun getRegisterID(registerID: Int) {
-        val item = getRegisterIDUseCase.getRegister(registerID)
-        _registerItem.value = item
+        viewModelScope.launch {
+            val item = getRegisterIDUseCase.invoke(registerID)
+            _registerItem.value = item
+        }
     }
 
     fun addRegister(
@@ -62,10 +73,12 @@ class RegisterItemViewModel : ViewModel() {
         val fieldsValid = validateInput(department, doctor, dateRegister, timeRegister)
 
         if (fieldsValid) {
-            val registerItem =
-                RegisterItem(dateRegister, timeRegister, department, doctor, note, false)
-            addRegisterUseCase.addRegister(registerItem)
-//            closeScreen()
+            viewModelScope.launch {
+                val registerItem =
+                    RegisterItem(dateRegister, timeRegister, department, doctor, note)
+                addRegisterUseCase.invoke(registerItem)
+                closeScreen()
+            }
         }
     }
 
@@ -92,15 +105,17 @@ class RegisterItemViewModel : ViewModel() {
             //вытаскиваем объект _registerItem из лайф-даты
             //может вернуться null-объект, поэтому редактируем объект с помощью оператора ".let"
             _registerItem.value?.let {
-                val item = it.copy(
-                    dateRegister = dateRegister,
-                    timeRegister = timeRegister,
-                    department = department,
-                    doctor = doctor,
-                    note = note
-                )
-                editRegisterUseCase.editRegister(item)
-                closeScreen()
+                viewModelScope.launch {
+                    val item = it.copy(
+                        dateRegister = dateRegister,
+                        timeRegister = timeRegister,
+                        department = department,
+                        doctor = doctor,
+                        note = note
+                    )
+                    editRegisterUseCase.invoke(item)
+                    closeScreen()
+                }
             }
         }
     }
@@ -164,5 +179,11 @@ class RegisterItemViewModel : ViewModel() {
     private fun closeScreen() {
         _shouldCloseScreen.value = Unit
     }
+
+    // не нужно при использовании viewModelScope
+//    override fun onCleared() {
+//        super.onCleared()
+//        scope.cancel()
+//    }
 
 }

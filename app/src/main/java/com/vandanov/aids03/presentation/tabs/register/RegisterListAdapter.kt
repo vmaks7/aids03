@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.vandanov.aids03.R
-import com.vandanov.aids03.domain.register.RegisterItem
+import com.vandanov.aids03.domain.register.entity.RegisterItem
 
 class RegisterListAdapter: ListAdapter<RegisterItem, RegisterItemViewHolder>(
     RegisterItemDiffCallback()
