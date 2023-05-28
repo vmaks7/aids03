@@ -96,9 +96,9 @@ class MainActivity : AppCompatActivity() {
         val graph = navController.navInflater.inflate(getMainNavigationGraphID())
         graph.setStartDestination(
 //            if (isSignedIn) {
-                getTabsDestination()
+//                getTabsDestination()
 //            } else {
-//                getSignInDestination()
+                getSignInDestination()
 //            }
         )
         navController.graph = graph

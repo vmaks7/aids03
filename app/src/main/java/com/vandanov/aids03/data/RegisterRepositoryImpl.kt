@@ -3,6 +3,7 @@ package com.vandanov.aids03.data
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import com.vandanov.aids03.data.room.AppDatabase
 import com.vandanov.aids03.domain.register.entity.RegisterItem
 import com.vandanov.aids03.domain.register.repository.RegisterRepository
 

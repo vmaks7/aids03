@@ -10,11 +10,12 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="250dp"
+        android:padding="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/phone_auth" />
+        app:srcCompat="@drawable/logo" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -34,7 +35,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:hint="Номер телефона"
+        android:hint="Логин (телефон или email)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressBar">
@@ -45,7 +46,7 @@
             android:layout_height="wrap_content"
             android:background="@color/edit_text_color"
             android:imeOptions="actionDone"
-            android:inputType="phone"
+            android:inputType="text"
             android:lines="1"
             android:textColor="@color/black"
             android:textColorHint="#606060" />
@@ -75,7 +76,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnSignIn"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="20dp"
@@ -101,7 +102,7 @@
         app:layout_constraintTop_toBottomOf="@+id/passwordTextInput"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -112,6 +113,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

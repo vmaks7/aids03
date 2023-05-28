@@ -1,4 +1,4 @@
-package com.vandanov.aids03.data
+package com.vandanov.aids03.data.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

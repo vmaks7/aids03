@@ -1,5 +1,6 @@
 package com.vandanov.aids03.data
 
+import com.vandanov.aids03.data.room.RegisterItemDBModel
 import com.vandanov.aids03.domain.register.entity.RegisterItem
 
 class RegisterListMapper {
