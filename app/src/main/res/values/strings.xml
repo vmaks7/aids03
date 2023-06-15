@@ -9,8 +9,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-    <string name="sign_in">Вход</string>
-    <string name="sign_up">Регистрация</string>
+    <string name="sign_in">Авторизация пользователя</string>
+    <string name="registration_method">Способ регистрации</string>
+    <string name="sign_up">Регистрация пользователя</string>
+    <string name="verification_code">Проверочный код</string>
 
     <string name="home">Главная</string>
     <string name="analyzes">Анализы</string>

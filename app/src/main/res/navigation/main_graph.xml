@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.vandanov.aids03.presentation.auth.SignInFragment"
-        android:label="@string/settings"
+        android:label="@string/sign_in"
         tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_signInFragment_to_tabsFragment"
@@ -18,20 +18,35 @@
         <action
             android:id="@+id/action_signInFragment_to_choiceRegistrationMethodFragment"
             app:destination="@id/choiceRegistrationMethodFragment" />
+        <argument
+            android:name="email"
+            app:argType="string"
+            android:defaultValue=''/>
+        <argument
+            android:name="password"
+            app:argType="string"
+            android:defaultValue='' />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.vandanov.aids03.presentation.auth.SignUpFragment"
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_otpFragment"
+            app:destination="@id/otpFragment" />
         <argument
             android:name="registrationMethod"
             app:argType="com.vandanov.aids03.domain.auth.entity.RegistrationMethod" />
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:popUpTo="@id/signInFragment" />
     </fragment>
     <fragment
         android:id="@+id/tabsFragment"
         android:name="com.vandanov.aids03.presentation.tabs.TabsFragment"
-        android:label="fragment_tabs"
+        android:label="@string/home"
         tools:layout="@layout/fragment_tabs" >
         <action
             android:id="@+id/action_tabsFragment_to_registerItemFragment"
@@ -52,7 +67,7 @@
     <dialog
         android:id="@+id/choiceRegistrationMethodFragment"
         android:name="com.vandanov.aids03.presentation.auth.ChoiceRegistrationMethodFragment"
-        android:label="fragment_choice_registration_method"
+        android:label="@string/registration_method"
         tools:layout="@layout/fragment_choice_registration_method" >
         <action
             android:id="@+id/action_choiceRegistrationMethodFragment_to_signInFragment"
@@ -61,4 +76,21 @@
             android:id="@+id/action_choiceRegistrationMethodFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/otpFragment"
+        android:name="com.vandanov.aids03.presentation.auth.OtpFragment"
+        android:label="@string/verification_code"
+        tools:layout="@layout/fragment_otp" >
+        <action
+            android:id="@+id/action_otpFragment_to_tabsFragment"
+            app:destination="@id/tabsFragment"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="epidN"
+            app:argType="string" />
+        <argument
+            android:name="dateBirth"
+            app:argType="string" />
+    </fragment>
 </navigation>

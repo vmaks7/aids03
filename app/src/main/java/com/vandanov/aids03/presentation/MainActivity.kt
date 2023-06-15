@@ -2,6 +2,7 @@ package com.vandanov.aids03.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -10,11 +11,19 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.vandanov.aids03.R
+import com.vandanov.aids03.data.auth.ActivityRequired
 import com.vandanov.aids03.databinding.ActivityMainBinding
+import com.vandanov.aids03.domain.auth.repository.AuthRepository
 import com.vandanov.aids03.presentation.tabs.TabsFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var activityRequiredStuffs: Set<@JvmSuppressWildcards ActivityRequired>
 
     private lateinit var binding: ActivityMainBinding
 
@@ -48,6 +57,12 @@ class MainActivity : AppCompatActivity() {
 //        viewModel.username.observe(this) {
 //            binding.usernameTextView.text = it
 //        }
+
+        activityRequiredStuffs.forEach {
+            it.onActivityCreated(this)
+        }
+
+        Log.d("MyLog", "MainActivity: $activityRequiredStuffs")
 
     }
 
@@ -136,4 +151,26 @@ class MainActivity : AppCompatActivity() {
         val startDestinations = topLevelDestinations + graph.startDestinationId
         return startDestinations.contains(destination.id)
     }
+
+    override fun onStart() {
+        super.onStart()
+        activityRequiredStuffs.forEach {
+            it.onActivityStarted()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        activityRequiredStuffs.forEach {
+            it.onActivityStopped()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activityRequiredStuffs.forEach {
+            it.onActivityDestroyed()
+        }
+    }
+
 }

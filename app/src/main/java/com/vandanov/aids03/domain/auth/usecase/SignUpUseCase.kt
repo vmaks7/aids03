@@ -1,17 +1,23 @@
 package com.vandanov.aids03.domain.auth.usecase
 
 import com.vandanov.aids03.domain.auth.entity.RegistrationMethod
+import com.vandanov.aids03.domain.auth.entity.SignUpItem
 import com.vandanov.aids03.domain.auth.repository.AuthRepository
 import javax.inject.Inject
 
-class SignInUseCase(private val repository: AuthRepository) {
+class SignUpUseCase (private val repository: AuthRepository) {
     suspend operator fun invoke(
-        email: String,
-        password: String,
+        signUpData: SignUpItem,
         registrationMethod: RegistrationMethod,
         message: (String) -> Unit,
+        otpCodeSend: (Boolean) -> Unit,
         navigate: (Boolean) -> Unit
     ) {
-        repository.signIn(email, password, registrationMethod, message, navigate)
+        return repository.signUp(
+            signUpData,
+            registrationMethod,
+            message,
+            otpCodeSend,
+            navigate)
     }
 }

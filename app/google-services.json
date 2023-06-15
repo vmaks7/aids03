@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "310270560243",
+    "project_id": "aids03",
+    "storage_bucket": "aids03.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310270560243:android:ea14816ae71e061cf2b486",
+        "android_client_info": {
+          "package_name": "com.vandanov.aids03"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "310270560243-qmk2863hdolc5dmc4cserqv707t9hj9e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vandanov.aids03",
+            "certificate_hash": "cbf0e77d34a304fd6219f6fddd721f9f780223ea"
+          }
+        },
+        {
+          "client_id": "310270560243-p68a9aq2q5ecu67g2390qqt6kblctena.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7ygFnxz96sah2Mfs-7J2yyS42iNELUAQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "310270560243-p68a9aq2q5ecu67g2390qqt6kblctena.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
