@@ -1,5 +1,6 @@
 package com.vandanov.aids03.data.retrofit
 
+import com.vandanov.aids03.domain.register.entity.appointmentDateTime.Appointment
 import retrofit2.http.*
 
 interface ApiService {
@@ -22,5 +23,19 @@ interface ApiService {
         @Query("date_birth") dateBirth : String,
         @Query("uid") uid : String
     ): Int
+
+//    @POST("mis/hs/mobile/list_specialists")
+//   // suspend fun getListSpecialistsAPI() : Call<List<Specialists>>
+//    suspend fun getListSpecialistsAPI() : AppointmentDate
+    @GET("mis/hs/mobile/appointment_time")
+    suspend fun getListSpecialistsAPI() : Appointment
+
+    @GET("mis/hs/mobile/list_specialists")
+    // suspend fun getListSpecialistsAPI() : Call<List<Specialists>>
+    suspend fun getSizeListSpecialistsAPI() : Int
+
+    @GET("mis/hs/mobile/appointment_time")
+    // suspend fun getListSpecialistsAPI() : Call<List<Specialists>>
+    suspend fun getAppointmentTimeAPI() : Appointment
 
 }

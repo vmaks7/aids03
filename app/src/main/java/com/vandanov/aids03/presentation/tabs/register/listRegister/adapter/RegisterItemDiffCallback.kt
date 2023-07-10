@@ -1,4 +1,4 @@
-package com.vandanov.aids03.presentation.tabs.register
+package com.vandanov.aids03.presentation.tabs.register.listRegister.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.vandanov.aids03.domain.register.entity.RegisterItem

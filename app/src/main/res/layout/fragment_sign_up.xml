@@ -44,9 +44,9 @@
             android:id="@+id/etPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/edit_text_color"
             android:imeOptions="actionDone"
-            android:inputType="text"
+            android:inputType="phone"
+            android:maxLength="18"
             android:lines="1"
             android:textColor="@color/black"
             android:textColorHint="#606060" />
@@ -69,9 +69,8 @@
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/edit_text_color"
             android:imeOptions="actionDone"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:lines="1"
             android:textColor="@color/black"
             android:textColorHint="#606060" />
@@ -94,7 +93,6 @@
             android:id="@+id/etEpidN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/edit_text_color"
             android:imeOptions="actionDone"
             android:inputType="phone"
             android:lines="1"
@@ -121,19 +119,19 @@
             android:id="@+id/etDateBirth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/edit_text_color"
             android:imeOptions="actionNext"
             android:inputType="date"
             android:lines="1"
             android:textColor="@color/black"
-            android:textColorHint="#606060"
-            android:focusable="false"
-            android:focusableInTouchMode="false" />
+            android:textColorHint="#606060" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiPassword"
+        app:helperText="минимум 6 символов"
+        app:counterEnabled="true"
+        app:passwordToggleEnabled="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -148,9 +146,8 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/edit_text_color"
-            android:imeOptions="actionDone"
-            android:inputType="phone"
+             android:imeOptions="actionDone"
+            android:inputType="textPassword"
             android:lines="1"
             android:textColor="@color/black"
             android:textColorHint="#606060" />
@@ -159,6 +156,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiRepeatPassword"
+        app:helperText="минимум 6 символов"
+        app:counterEnabled="true"
+        app:passwordToggleEnabled="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -173,9 +173,8 @@
             android:id="@+id/etRepeatPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/edit_text_color"
             android:imeOptions="actionDone"
-            android:inputType="phone"
+            android:inputType="textPassword"
             android:lines="1"
             android:textColor="@color/black"
             android:textColorHint="#606060" />

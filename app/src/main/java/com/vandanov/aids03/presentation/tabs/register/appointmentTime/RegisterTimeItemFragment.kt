@@ -1,4 +1,4 @@
-package com.vandanov.aids03.presentation.auth
+package com.vandanov.aids03.presentation.tabs.register.appointmentTime
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,14 +8,13 @@ import android.view.ViewGroup
 import com.vandanov.aids03.R
 
 
-class SignInPhoneFragment : Fragment() {
-
+class RegisterTimeItemFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_in_phone, container, false)
+        return inflater.inflate(R.layout.fragment_register_time_item, container, false)
     }
 
 }

@@ -45,7 +45,6 @@
             android:id="@+id/etLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/edit_text_color"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:lines="1"
@@ -55,6 +54,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiPassword"
+        app:passwordToggleEnabled="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -67,9 +67,8 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/edit_text_color"
             android:imeOptions="actionDone"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:lines="1"
             android:textColor="@color/black"
             android:textColorHint="#606060" />

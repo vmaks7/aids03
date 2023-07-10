@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.vandanov.aids03.presentation.tabs.register.RegisterFragment"
+        android:name="com.vandanov.aids03.presentation.tabs.register.listRegister.RegisterFragment"
         android:label="@string/register"
         tools:layout="@layout/fragment_register"/>
 </navigation>

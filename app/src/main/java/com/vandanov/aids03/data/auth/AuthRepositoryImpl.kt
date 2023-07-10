@@ -1,5 +1,6 @@
 package com.vandanov.aids03.data.auth
 
+import android.text.BoringLayout
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import com.google.firebase.FirebaseException
@@ -13,10 +14,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.net.ConnectException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.sign
+
 
 @Singleton
 class AuthRepositoryImpl @Inject constructor() : AuthRepository, ActivityRequired {
@@ -26,17 +28,23 @@ class AuthRepositoryImpl @Inject constructor() : AuthRepository, ActivityRequire
 
     private lateinit var verificationID: String
 
-    private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private lateinit var firebaseAuth: FirebaseAuth
+
+    override fun initFirebase() : Boolean {
+        firebaseAuth = FirebaseAuth.getInstance()
+        val user = firebaseAuth.currentUser
+        return user != null
+    }
 
     override suspend fun signIn(
-        email: String,
+        login: String,
         password: String,
         registrationMethod: RegistrationMethod,
         message: (String) -> Unit,
         navigate: (Boolean) -> Unit
     ) {
         if (registrationMethod == RegistrationMethod.EMAIL) {
-            firebaseAuth.signInWithEmailAndPassword(email, password)
+            firebaseAuth.signInWithEmailAndPassword(login, password)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         if (it.result.user?.isEmailVerified == true) {
@@ -67,11 +75,70 @@ class AuthRepositoryImpl @Inject constructor() : AuthRepository, ActivityRequire
                         }
                     }
                 }
-
         } else if (registrationMethod == RegistrationMethod.PHONE) {
 
         }
+
     }
+
+//    override suspend fun signInPhone(
+//        phone: String,
+//        message: (String) -> Unit,
+//        navigateOTP: (Boolean) -> Unit
+//    ) {
+//
+//        if (isActivityStarted) {
+//
+//            val options = PhoneAuthOptions.newBuilder(firebaseAuth)
+//                .setPhoneNumber(phone)       // Phone number to verify
+//                .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+//                .setActivity(activityMain!!)                 // Activity (for callback binding)
+//                .setCallbacks(object :
+//                    PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+//
+//                    override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+////            signInWithPhoneAuthCredential(credential)
+//                        Log.d("MyLog", "onVerificationCompleted")
+//                    }
+//
+//                    override fun onVerificationFailed(e: FirebaseException) {
+//                        Log.d("MyLog", "onVerificationFailed ${e.toString()}")
+////                            if (e is FirebaseAuthInvalidCredentialsException) {
+////                                // Invalid request
+////                                Log.d("MyLog", "onVerificationFailed: ${e.toString()}")
+////                            } else if (e is FirebaseTooManyRequestsException) {
+////                                // The SMS quota for the project has been exceeded
+////                                Log.d("MyLog", "onVerificationFailed: ${e.toString()}")
+////                            }
+////            mProgressBar.visibility = View.VISIBLE
+//                        // Show a message and update the UI
+//                    }
+//
+//                    override fun onCodeSent(
+//                        verificationId: String,
+//                        token: PhoneAuthProvider.ForceResendingToken
+//                    ) {
+////            mProgressBar.visibility = View.INVISIBLE
+//
+//                        verificationID = verificationId
+//
+//                        navigateOTP(true)
+//
+////                                val credential: PhoneAuthCredential =
+////                                    PhoneAuthProvider.getCredential(
+////                                        verificationId, "123456"
+////                                    )
+////                                signInWithPhoneAuthCredential(credential)
+//
+//                    }
+//                }) // OnVerificationStateChangedCallbacks
+//                .build()
+//
+//            Log.d("MyLog", "PhoneAuthProvider.verifyPhoneNumber(options) $options")
+//            PhoneAuthProvider.verifyPhoneNumber(options)
+//        }
+//
+//    }
 
     override suspend fun signUp(
         signUpData: SignUpItem,
@@ -252,6 +319,8 @@ class AuthRepositoryImpl @Inject constructor() : AuthRepository, ActivityRequire
                         }
                     }
 
+                    Log.d("MyLog", "signInWithCredential uid $uid")
+
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.d("MyLog", "signInWithPhoneAuthCredential: ${task.exception.toString()}")
@@ -350,11 +419,9 @@ class AuthRepositoryImpl @Inject constructor() : AuthRepository, ActivityRequire
         return userInfo
     }
 
-
     override fun logout() {
-        TODO("Not yet implemented")
+        firebaseAuth.signOut()
     }
-
 
     private suspend fun uidSave(epidN: String, dateBirth: String, uid: String): Int {
 

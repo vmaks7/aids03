@@ -21,7 +21,6 @@ import androidx.navigation.fragment.findNavController
 import com.vandanov.aids03.R
 import com.vandanov.aids03.databinding.FragmentDialogOtpBinding
 import com.vandanov.aids03.databinding.FragmentOtpBinding
-import com.vandanov.aids03.databinding.FragmentSignUpBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

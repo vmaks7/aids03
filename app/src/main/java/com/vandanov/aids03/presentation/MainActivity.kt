@@ -4,20 +4,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.vandanov.aids03.R
 import com.vandanov.aids03.data.auth.ActivityRequired
 import com.vandanov.aids03.databinding.ActivityMainBinding
-import com.vandanov.aids03.domain.auth.repository.AuthRepository
 import com.vandanov.aids03.presentation.tabs.TabsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
 import javax.inject.Inject
+import kotlin.math.sign
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -40,8 +43,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val viewModel: MainActivityViewModel by viewModels()
+    private var signedIn: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        signedIn = viewModel.initFirebase()
 
         binding = ActivityMainBinding.inflate(layoutInflater).also { setContentView(it.root) }
         setSupportActionBar(binding.toolbar)
@@ -61,8 +69,6 @@ class MainActivity : AppCompatActivity() {
         activityRequiredStuffs.forEach {
             it.onActivityCreated(this)
         }
-
-        Log.d("MyLog", "MainActivity: $activityRequiredStuffs")
 
     }
 
@@ -110,11 +116,11 @@ class MainActivity : AppCompatActivity() {
     private fun prepareRootNavController(navController: NavController) {
         val graph = navController.navInflater.inflate(getMainNavigationGraphID())
         graph.setStartDestination(
-//            if (isSignedIn) {
-//                getTabsDestination()
-//            } else {
+            if (signedIn) {
+                getTabsDestination()
+            } else {
                 getSignInDestination()
-//            }
+            }
         )
         navController.graph = graph
     }

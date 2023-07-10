@@ -1,4 +1,4 @@
-package com.vandanov.aids03.data
+package com.vandanov.aids03.data.register
 
 import com.vandanov.aids03.data.room.RegisterItemDBModel
 import com.vandanov.aids03.domain.register.entity.RegisterItem

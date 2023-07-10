@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val signInUseCase: SignInUseCase
+    private val signInEmailUseCase: SignInUseCase
 ) : ViewModel() {
 
 //    private val repository = AuthRepositoryImpl()
@@ -69,12 +69,12 @@ class SignInViewModel @Inject constructor(
         _errorInputPassword.value = false
     }
 
-    fun signInEmail(email: String, password: String, registrationMethod: RegistrationMethod) {
+    fun signIn(email: String, password: String, registrationMethod: RegistrationMethod) {
         _signInInProgress.value = true
         val fieldsValid = validateInput(email, password)
         if (fieldsValid) {
             viewModelScope.launch {
-                signInUseCase.invoke(
+                signInEmailUseCase.invoke(
                     email,
                     password,
                     registrationMethod,
@@ -91,6 +91,8 @@ class SignInViewModel @Inject constructor(
             }
         }
     }
+
+
 
     private var timer: CountDownTimer? = null
     fun startCountDownTimer() {

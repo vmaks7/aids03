@@ -18,7 +18,6 @@ import com.vandanov.aids03.domain.auth.entity.RegistrationMethod
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
 
-
 @AndroidEntryPoint
 class SignInFragment : Fragment() {
 
@@ -26,7 +25,7 @@ class SignInFragment : Fragment() {
 
     private var _binding: FragmentSignInBinding? = null
     private val binding: FragmentSignInBinding
-        get() = _binding ?: throw RuntimeException("FragmentSignInBinding == null")
+        get() = _binding ?: throw RuntimeException("FragmentSignInEmailBinding == null")
 
     //    private lateinit var viewModel: SignInViewModel
     private val viewModel: SignInViewModel by viewModels()
@@ -59,7 +58,7 @@ class SignInFragment : Fragment() {
 
             if (isValidEmail(login)) {
 
-                viewModel.signInEmail(login, password, RegistrationMethod.EMAIL)
+                viewModel.signIn(login, password, RegistrationMethod.EMAIL)
 
                 viewModel.navigateTabs.observe(viewLifecycleOwner) {
                     if (it) {
@@ -83,8 +82,8 @@ class SignInFragment : Fragment() {
         }
 
         binding.tvRegister.setOnClickListener {
-//            val direction = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
-//            val direction = SignInFragmentDirections.actionSignInFragmentToChoiceRegistrationMethodFragment()
+////            val direction = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
+////            val direction = SignInFragmentDirections.actionSignInFragmentToChoiceRegistrationMethodFragment()
             findNavController().navigate(R.id.choiceRegistrationMethodFragment)
         }
     }

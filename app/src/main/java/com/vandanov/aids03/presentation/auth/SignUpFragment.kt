@@ -13,23 +13,32 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.vandanov.aids03.R
 import com.vandanov.aids03.databinding.FragmentSignUpBinding
 import com.vandanov.aids03.domain.auth.entity.SignUpItem
 import dagger.hilt.android.AndroidEntryPoint
+import ru.tinkoff.decoro.MaskImpl
+import ru.tinkoff.decoro.parser.UnderscoreDigitSlotsParser
+import ru.tinkoff.decoro.slots.PredefinedSlots
+import ru.tinkoff.decoro.watchers.DescriptorFormatWatcher
+import ru.tinkoff.decoro.watchers.FormatWatcher
+import ru.tinkoff.decoro.watchers.MaskFormatWatcher
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.*
+
 
 @AndroidEntryPoint
 class SignUpFragment : Fragment(), TextView.OnEditorActionListener {
 
-//    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var formatWatcher: DescriptorFormatWatcher
 
     private val args by navArgs<SignUpFragmentArgs>()
     val registrationMethod by lazy { args.registrationMethod }
@@ -53,6 +62,26 @@ class SignUpFragment : Fragment(), TextView.OnEditorActionListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
+
+//        //маска для номер телефона (библиотека decoro)
+//        formatWatcher = DescriptorFormatWatcher(MaskDescriptor.emptyMask().setTerminated(false))
+//        formatWatcher.installOn(binding.etPhoneNumber)
+//        val maskDescriptor = MaskDescriptor.ofSlots(PredefinedSlots.RUS_PHONE_NUMBER)
+//        formatWatcher.changeMask(maskDescriptor.setInitialValue(binding.etPhoneNumber.text.toString()))
+
+        val mask = MaskImpl.createTerminated(PredefinedSlots.RUS_PHONE_NUMBER)
+        val watcher: FormatWatcher = MaskFormatWatcher(mask)
+        watcher.installOn(binding.etPhoneNumber) // install on any TextView
+
+        val slots = UnderscoreDigitSlotsParser().parseSlots("__.__.____")
+        val formatWatcher: FormatWatcher = MaskFormatWatcher(MaskImpl.createTerminated(slots))
+        formatWatcher.installOn(binding.etDateBirth)
+
+//        if (isValidDate(binding.etDateBirth.text.toString())) {
+//            Toast.makeText(context, "Дата валидная!", Toast.LENGTH_LONG).show()
+//        } else {
+//            Toast.makeText(context, "Дата невалидная!", Toast.LENGTH_LONG).show()
+//        }
 
         binding.btnSignUp.setOnClickListener {
             addTextChangeListeners()
@@ -200,6 +229,9 @@ class SignUpFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun addTextChangeListeners() {
+
+        Log.d("MyLog", "addTextChangeListeners")
+
         binding.etEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -276,20 +308,21 @@ class SignUpFragment : Fragment(), TextView.OnEditorActionListener {
 
     private fun observeViewModel() {
         viewModel.errorInputEmail.observe(viewLifecycleOwner) {
-            val errorMessage = if (it) {
-                "Заполните поле email"
-            } else {
-                null
-            }
-            binding.tiEmail.error = errorMessage
+//            val errorMessage = if (it) {
+//                "Заполните поле email"
+//            } else {
+//                null
+//            }
+            binding.tiEmail.error = it
         }
         viewModel.errorInputPhoneNumber.observe(viewLifecycleOwner) {
-            val errorMessage = if (it) {
-                "Заполните поле телефон"
-            } else {
-                null
-            }
-            binding.tiPhoneNumber.error = errorMessage
+//            val errorMessage = if (it) {
+//                "Заполните поле телефон"
+//            } else {
+//                null
+//            }
+//            binding.tiPhoneNumber.error = errorMessage
+            binding.tiPhoneNumber.error = it
         }
         viewModel.errorInputEpidN.observe(viewLifecycleOwner) {
             val errorMessage = if (it) {
@@ -300,12 +333,13 @@ class SignUpFragment : Fragment(), TextView.OnEditorActionListener {
             binding.tiEpidN.error = errorMessage
         }
         viewModel.errorInputDateBirth.observe(viewLifecycleOwner) {
-            val errorMessage = if (it) {
-                "Заполните поле дата рождения"
-            } else {
-                null
-            }
-            binding.tiDateBirth.error = errorMessage
+//            val errorMessage = if (it) {
+//                "Заполните поле дата рождения"
+//            } else {
+//                null
+//            }
+//            binding.tiDateBirth.error = errorMessage
+            binding.tiDateBirth.error = it
         }
         viewModel.errorInputPassword.observe(viewLifecycleOwner) {
             val errorMessage = if (it) {
@@ -412,4 +446,15 @@ class SignUpFragment : Fragment(), TextView.OnEditorActionListener {
             binding.tiPassword.requestFocus()
         }
     }
+
+    private fun isValidDate(dateString: String): Boolean {
+        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+        return try {
+            val date = LocalDate.parse(dateString, formatter)
+            true
+        } catch (e: DateTimeParseException) {
+            false
+        }
+    }
+
 }

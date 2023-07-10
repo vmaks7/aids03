@@ -5,6 +5,8 @@ import com.vandanov.aids03.domain.auth.entity.SignUpItem
 
 interface AuthRepository {
 
+    fun initFirebase() : Boolean
+
     suspend fun signIn(
         email: String,
         password: String,

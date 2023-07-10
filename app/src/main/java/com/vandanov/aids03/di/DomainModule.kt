@@ -2,9 +2,7 @@ package com.vandanov.aids03.di
 
 import com.vandanov.aids03.data.auth.AuthRepositoryImpl
 import com.vandanov.aids03.domain.auth.repository.AuthRepository
-import com.vandanov.aids03.domain.auth.usecase.OtpSignUpUseCase
-import com.vandanov.aids03.domain.auth.usecase.SignInEmailUseCase
-import com.vandanov.aids03.domain.auth.usecase.SignUpUseCase
+import com.vandanov.aids03.domain.auth.usecase.*
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -37,13 +35,23 @@ class DomainModule {
     }
 
     @Provides
-    fun provideSignInEmailUseCase(authRepository: AuthRepository): SignInEmailUseCase {
-        return SignInEmailUseCase(authRepository)
+    fun provideSignInUseCase(authRepository: AuthRepository): SignInUseCase {
+        return SignInUseCase(authRepository)
     }
 
     @Provides
     fun provideOtpSignUpUseCase(authRepository: AuthRepository): OtpSignUpUseCase {
         return OtpSignUpUseCase(authRepository)
+    }
+
+    @Provides
+    fun provideInitFirebaseUseCase(authRepository: AuthRepository): InitFirebaseUseCase {
+        return InitFirebaseUseCase(authRepository)
+    }
+
+    @Provides
+    fun provideLogoutUseCase(authRepository: AuthRepository): LogoutUseCase {
+        return LogoutUseCase(authRepository)
     }
 
 }

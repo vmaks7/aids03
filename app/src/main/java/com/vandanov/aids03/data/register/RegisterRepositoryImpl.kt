@@ -1,10 +1,12 @@
-package com.vandanov.aids03.data
+package com.vandanov.aids03.data.register
 
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import com.vandanov.aids03.data.retrofit.RetrofitInstance
 import com.vandanov.aids03.data.room.AppDatabase
 import com.vandanov.aids03.domain.register.entity.RegisterItem
+import com.vandanov.aids03.domain.register.entity.appointmentDateTime.Appointment
 import com.vandanov.aids03.domain.register.repository.RegisterRepository
 
 //до ROOM был object
@@ -16,7 +18,41 @@ class RegisterRepositoryImpl(
     private val registerListDao = AppDatabase.getInstance(application).registerListDao()
     private val mapper = RegisterListMapper()
 
-        //private val registerListLiveData = MutableLiveData<List<RegisterItem>>()
+    override suspend fun getListSpecialists(): Appointment {
+
+//        RetrofitInstance.api.getListSpecialistsAPI().enqueue(object : retrofit2.Callback<List<Specialists>> {
+//            override fun onResponse(
+//                call: Call<List<Specialists>>,
+//                response: Response<List<Specialists>>
+//            ) {
+//                if (response.isSuccessful) {
+//                    response.body()?.let {
+//                        for (comment in it) {
+//                            Log.d("MyLog", "onResponse: ${comment.fio}")
+//                        }
+//                    }
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<List<Specialists>>, t: Throwable) {
+//                Log.d("MyLog", "onFailure: ${t.message}")
+//            }
+//
+//        })
+
+        return RetrofitInstance.api.getListSpecialistsAPI()
+
+    }
+
+//    override suspend fun getAppointmentTime(): AppointmentDate {
+//        return RetrofitInstance.api.getAppointmentTimeAPI()
+//    }
+//
+//    override suspend fun getSizeListSpecialists(): Int {
+//        return RetrofitInstance.api.getSizeListSpecialistsAPI()
+//    }
+
+    //private val registerListLiveData = MutableLiveData<List<RegisterItem>>()
 
     //до ROOM
 //    //    private val registerList = mutableListOf<RegisterItem>()

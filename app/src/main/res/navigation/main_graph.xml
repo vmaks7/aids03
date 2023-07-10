@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/choiceRegistrationMethodFragment">
 
     <fragment
         android:id="@+id/signInFragment"
@@ -15,9 +16,6 @@
             app:destination="@id/tabsFragment"
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_signInFragment_to_choiceRegistrationMethodFragment"
-            app:destination="@id/choiceRegistrationMethodFragment" />
         <argument
             android:name="email"
             app:argType="string"
@@ -26,18 +24,21 @@
             android:name="password"
             app:argType="string"
             android:defaultValue='' />
+        <action
+            android:id="@+id/action_signInFragment_to_choiceRegistrationMethodFragment"
+            app:destination="@id/choiceRegistrationMethodFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.vandanov.aids03.presentation.auth.SignUpFragment"
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_sign_up" >
-        <action
-            android:id="@+id/action_signUpFragment_to_otpFragment"
-            app:destination="@id/otpFragment" />
         <argument
             android:name="registrationMethod"
             app:argType="com.vandanov.aids03.domain.auth.entity.RegistrationMethod" />
+        <action
+            android:id="@+id/action_signUpFragment_to_otpFragment"
+            app:destination="@id/otpFragment" />
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@id/signInFragment"
@@ -49,33 +50,9 @@
         android:label="@string/home"
         tools:layout="@layout/fragment_tabs" >
         <action
-            android:id="@+id/action_tabsFragment_to_registerItemFragment"
-            app:destination="@id/registerItemFragment" />
+            android:id="@+id/action_tabsFragment_to_registerSpecialistsFragment"
+            app:destination="@id/SpecialistsFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/registerItemFragment"
-        android:name="com.vandanov.aids03.presentation.tabs.register.RegisterItemFragment"
-        android:label="@string/registration"
-        tools:layout="@layout/fragment_register_item" >
-        <argument
-            android:name="mode"
-            app:argType="string" />
-        <argument
-            android:name="registerID"
-            app:argType="integer" />
-    </fragment>
-    <dialog
-        android:id="@+id/choiceRegistrationMethodFragment"
-        android:name="com.vandanov.aids03.presentation.auth.ChoiceRegistrationMethodFragment"
-        android:label="@string/registration_method"
-        tools:layout="@layout/fragment_choice_registration_method" >
-        <action
-            android:id="@+id/action_choiceRegistrationMethodFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
-        <action
-            android:id="@+id/action_choiceRegistrationMethodFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
-    </dialog>
     <fragment
         android:id="@+id/otpFragment"
         android:name="com.vandanov.aids03.presentation.auth.OtpFragment"
@@ -92,5 +69,28 @@
         <argument
             android:name="dateBirth"
             app:argType="string" />
+    </fragment>
+    <dialog
+        android:id="@+id/choiceRegistrationMethodFragment"
+        android:name="com.vandanov.aids03.presentation.auth.ChoiceRegistrationMethodFragment"
+        android:label="fragment_choice_registration_method"
+        tools:layout="@layout/fragment_choice_registration_method" >
+        <action
+            android:id="@+id/action_choiceRegistrationMethodFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/registerDateFragment"
+        android:name="com.vandanov.aids03.presentation.tabs.register.appointmentTime.RegisterDateFragment"
+        android:label="fragment_register_date"
+        tools:layout="@layout/fragment_register_date" />
+    <fragment
+        android:id="@+id/SpecialistsFragment"
+        android:name="com.vandanov.aids03.presentation.tabs.register.listSpecialists.SpecialistsFragment"
+        android:label="fragment_specialists"
+        tools:layout="@layout/fragment_specialists" >
+        <action
+            android:id="@+id/action_SpecialistsFragment_to_registerDateFragment"
+            app:destination="@id/registerDateFragment" />
     </fragment>
 </navigation>

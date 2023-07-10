@@ -1,15 +1,12 @@
 package com.vandanov.aids03.presentation.auth
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.vandanov.aids03.R
 import com.vandanov.aids03.databinding.FragmentChoiceRegistrationMethodBinding
-import com.vandanov.aids03.databinding.FragmentSignInBinding
 import com.vandanov.aids03.domain.auth.entity.RegistrationMethod
 
 

@@ -1,11 +1,11 @@
-package com.vandanov.aids03.presentation.tabs.register
+package com.vandanov.aids03.presentation.tabs.register.listRegister
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.vandanov.aids03.data.RegisterRepositoryImpl
+import com.vandanov.aids03.data.register.RegisterRepositoryImpl
 import com.vandanov.aids03.domain.register.entity.RegisterItem
 import com.vandanov.aids03.domain.register.usecase.AddRegisterUseCase
 import com.vandanov.aids03.domain.register.usecase.EditRegisterUseCase
